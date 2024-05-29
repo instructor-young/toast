@@ -7,10 +7,9 @@ import React, {
 } from "react";
 import Toast from "../components/Toast";
 
-const DURATION = 1000;
+const DURATION = 100000;
 
 export type ToastOption = {
-  variant?: "info" | "warning" | "danger";
   title: string;
   description: string;
 };
@@ -41,11 +40,11 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
     <ToastContext.Provider value={value}>
       {children}
       {toasts.length > 0 && (
-        <div style={{ position: "fixed", right: 0, bottom: 0 }}>
+        <ul className="fixed bottom-6 right-6 grid grid-cols-1 gap-y-3">
           {toasts.map((toast) => (
-            <React.Fragment key={toast.id}>{toast.element}</React.Fragment>
+            <li key={toast.id}>{toast.element}</li>
           ))}
-        </div>
+        </ul>
       )}
     </ToastContext.Provider>
   );
