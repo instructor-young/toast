@@ -5,8 +5,10 @@ import Input from "./Input";
 function Controller() {
   const toast = useToast();
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState("Scheduled: Catch up");
+  const [description, setDescription] = useState(
+    "Friday, February 10, 2023 at 5:57 PM"
+  );
   const [duration, setDuration] = useState(2000);
 
   const handleClickButton = () => {
