@@ -1,32 +1,16 @@
-import React, {
-  ReactElement,
-  createContext,
-  useCallback,
-  useContext,
-  useState,
-} from "react";
+import React, { createContext, useCallback, useContext, useState } from "react";
 import Toast from "../components/Toast";
 
 const DEFAULT_DURATION = 2000;
 
-export type ToastOption = {
-  title: string;
-  description: string;
-  duration: number;
-};
-
-type ToastContext = (option: ToastOption) => void;
-
-const initialValue: ToastContext = () => {};
+const initialValue = () => {};
 
 const ToastContext = createContext(initialValue);
 
-export function ToastProvider({ children }: { children: React.ReactNode }) {
-  const [toasts, setToasts] = useState<
-    Array<{ id: string; element: ReactElement; option: ToastOption }>
-  >([]);
+export function ToastProvider({ children }) {
+  const [toasts, setToasts] = useState([]);
 
-  const value = useCallback((option: ToastOption) => {
+  const value = useCallback((option) => {
     const id = crypto.randomUUID();
     const element = (
       <Toast
