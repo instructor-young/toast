@@ -7,11 +7,12 @@ import React, {
 } from "react";
 import Toast from "../components/Toast";
 
-const DURATION = 100000;
+const DEFAULT_DURATION = 2000;
 
 export type ToastOption = {
   title: string;
   description: string;
+  duration: number;
 };
 
 type ToastContext = (option: ToastOption) => void;
@@ -27,13 +28,22 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
 
   const value = useCallback((option: ToastOption) => {
     const id = crypto.randomUUID();
-    const element = <Toast option={option} />;
+    const element = (
+      <Toast
+        option={{ ...option, duration: option.duration || DEFAULT_DURATION }}
+      />
+    );
 
     setToasts((prevToasts) => [...prevToasts, { id, element, option }]);
 
-    setTimeout(() => {
-      setToasts((prevToasts) => prevToasts.filter((toast) => toast.id !== id));
-    }, DURATION);
+    setTimeout(
+      () => {
+        setToasts((prevToasts) =>
+          prevToasts.filter((toast) => toast.id !== id)
+        );
+      },
+      option.duration ? option.duration + 500 : DEFAULT_DURATION + 500
+    );
   }, []);
 
   return (
